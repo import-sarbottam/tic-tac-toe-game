@@ -1,3 +1,4 @@
+import re
 def board(row1,row2,row3):
     print(row1[0],'|',row1[1],'|',row1[2])
     print('---------')
