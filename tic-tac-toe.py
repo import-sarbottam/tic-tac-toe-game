@@ -69,6 +69,7 @@ print("""\n RULES FOR TIC-TAC-TOE
 5. When all 9 squares are full, the game is over. If no player has 3 marks in a row, the game ends in a tie.""")
 x = 0
 name_check = 1
+num_format = re.compile(r'^\-?[1-9][0-9]*$')
 playerA = str(input('Enter your name playerA: ')).capitalize()
 playerB = str(input('Enter your name playerB: ')).capitalize()
 if playerB == playerA:
@@ -85,8 +86,8 @@ if userA == 'X':
     userB = 'O'
 else:
     userB = 'X'
-print(f'{playerA} is ',userA)
-print(f'{playerB} is ',userB)
+print(f'{playerA} is',userA)
+print(f'{playerB} is',userB)
 dic = {playerA: userA,playerB: userB}
 a = 1
 b = 0
@@ -94,10 +95,16 @@ defined_set = set(range(1,10))
 check_set = set()
 while defined_set!=check_set:
     if a==1:
-        choice = int(input(f'Enter your choice {playerA}: '))
-        if choice in check_set or choice not in range(1,10):
-            print(f'Wrong choice or place already chosen by {playerB}')
+        choice = input(f'Enter your choice {playerA}: ')
+        it_is = re.match(num_format,choice)
+        if not it_is:
+            print('You must put in a number!!')
+        elif int(choice) not in range(1,10):
+            print('Wrong choice')
+        elif int(choice) in check_set:
+            print(f'Cell already chosen by {playerB}')
         else:
+            choice = int(choice)
             check_set.add(choice)
             input_to_row(choice, userA)
             board(r1,r2,r3)
@@ -107,10 +114,16 @@ while defined_set!=check_set:
             a=0
             b=1
     else:
-        choice = int(input(f'Enter your choice {playerB}: '))
-        if choice in check_set or choice not in range(1,10):
-            print(f'Wrong choice or place already chosen by {playerA}')
+        choice = input(f'Enter your choice {playerB}: ')
+        it_is = re.match(num_format,choice)
+        if not it_is:
+            print('You must put in a number!!')
+        elif int(choice) not in range(1,10):
+            print('Wrong choice')
+        elif int(choice) in check_set:
+            print(f'Cell already chosen by {playerA}')
         else:
+            choice = int(choice)
             check_set.add(choice)
             input_to_row(choice, userB)
             board(r1,r2,r3)
