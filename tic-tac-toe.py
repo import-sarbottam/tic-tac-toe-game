@@ -68,45 +68,56 @@ print("""\n RULES FOR TIC-TAC-TOE
 
 5. When all 9 squares are full, the game is over. If no player has 3 marks in a row, the game ends in a tie.""")
 x = 0
+name_check = 1
+playerA = str(input('Enter your name playerA: ')).capitalize()
+playerB = str(input('Enter your name playerB: ')).capitalize()
+if playerB == playerA:
+    name_check =0
+while name_check ==0:
+    playerB = str(input('PlayerA already chose that name, choose another name playerB: ')).capitalize()
+    if playerA != playerB:
+        name_check = 1
 while x==0:
-    userA = str(input('PlayerA choose between X or O: ')).capitalize()
+    userA = str(input(f'{playerA} choose between X or O: ')).capitalize()
     if userA=='X' or userA=='O':
         x=1
 if userA == 'X':
     userB = 'O'
 else:
     userB = 'X'
-print('PlayerA is ',userA)
-print('PlayerB is ',userB)
-dic = {'playerA': userA,'playerB': userB}
+print(f'{playerA} is ',userA)
+print(f'{playerB} is ',userB)
+dic = {playerA: userA,playerB: userB}
 a = 1
 b = 0
 defined_set = set(range(1,10))
 check_set = set()
 while defined_set!=check_set:
     if a==1:
-        choice = int(input('Enter your choice playerA: '))
+        choice = int(input(f'Enter your choice {playerA}: '))
         if choice in check_set or choice not in range(1,10):
-            print('Wrong choice or place already chosen by playerB')
+            print(f'Wrong choice or place already chosen by {playerB}')
         else:
             check_set.add(choice)
             input_to_row(choice, userA)
             board(r1,r2,r3)
             if who_won(r1,r2,r3):
+                x = 0
                 break
             a=0
             b=1
     else:
-        choice = int(input('Enter your choice playerB: '))
+        choice = int(input(f'Enter your choice {playerB}: '))
         if choice in check_set or choice not in range(1,10):
-            print('Wrong choice or place already chosen by playerA')
+            print(f'Wrong choice or place already chosen by {playerA}')
         else:
             check_set.add(choice)
             input_to_row(choice, userB)
             board(r1,r2,r3)
             if who_won(r1,r2,r3):
+                x = 0
                 break
             a=1
             b=0
-if who_won(r1,r2,r3) == False:
-    print('The match Ended in a tie!!')
+if x != 0:
+    print('The match ended in a tie!!')
